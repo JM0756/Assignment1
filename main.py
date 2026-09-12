@@ -75,3 +75,29 @@ class SandwichMachine:
             self.machine_resources[item] -= amount
 
 ### Make an instance of SandwichMachine class and write the rest of the codes ###
+
+machine = SandwichMachine(resources)
+
+choice = input("What size sandwich would you like? (small/medium/large): ").lower()
+
+if choice not in recipes:
+    print("Invalid choice. Please select small, medium, or large.")
+else:
+    order_ingredients = recipes[choice]["ingredients"]
+    cost = recipes[choice]["cost"]
+
+    if machine.check_resources(order_ingredients):
+        print(f"The cost of the {choice} sandwich is ${cost:.2f}.")
+        coins_inserted = machine.process_coins()
+        
+        if machine.transaction_result(coins_inserted, cost):
+            change = coins_inserted - cost, 2
+            machine.make_sandwich(choice, order_ingredients)
+            print(f"Here is your {choice} sandwich. Enjoy!")
+            if change > 0:
+                print(f"Here is your change: ${change:.2f}")
+        else:
+            print("Sorry, that's not enough money. Money refunded.")
+    else:
+        print("Sorry, we don't have enough ingredients to make that sandwich.")
+
