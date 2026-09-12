@@ -91,7 +91,7 @@ else:
         coins_inserted = machine.process_coins()
         
         if machine.transaction_result(coins_inserted, cost):
-            change = coins_inserted - cost, 2
+            change = round(coins_inserted - cost, 2)
             machine.make_sandwich(choice, order_ingredients)
             print(f"Here is your {choice} sandwich. Enjoy!")
             if change > 0:
